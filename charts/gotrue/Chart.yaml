@@ -26,3 +26,9 @@ appVersion: "v2.125.1"
 maintainers:
   - name: jessebot
     url: https://github.com/jessebot
+
+dependencies:
+  - name: postgresql
+    version: 13.2.*
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: postgresql.enabled

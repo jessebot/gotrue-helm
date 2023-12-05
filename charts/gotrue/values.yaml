@@ -19,8 +19,8 @@ nameOverride: ""
 fullnameOverride: ""
 
 gotrue:
-  # -- siteUrl to use for gotrue, example... "appflow-flutter://"
-  siteUrl: ""
+  # -- siteUrl to use for gotrue
+  siteUrl: "http://localhost:3000"
   # -- use an existing secret for gotrue env vars
   existingSecret: ""
   # -- set the admin password for gotrue - ignored if gotrue.existingSecret is not empty
@@ -88,8 +88,8 @@ gotrue:
   database:
     # -- which database backend to use for gotrue
     driver: postgres
-    # -- database connection url, example: postgres://supabase_auth_admin:root@postgres:5432/postgres
-    connectionUrl: ""
+    # -- database connection url
+    connectionUrl: "postgres://postgres@postgresql.svc:5432/gotrue"
     # -- database namespace?
     namespace: "auth"
 
@@ -269,3 +269,36 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+##
+## PostgreSQL chart configuration
+## for more options see https://github.com/bitnami/charts/tree/main/bitnami/postgresql
+##
+postgresql:
+  enabled: true
+  fullnameOverride: postgresql
+  global:
+    postgresql:
+      # -- global.postgresql.auth overrides postgresql.auth
+      auth:
+        username: gotrue
+        password: changeme
+        database: gotrue
+        postgresPassword: changeme
+        # -- Name of existing secret to use for PostgreSQL credentials.
+        # auth.postgresPassword, auth.password, and auth.replicationPassword will be ignored and picked up from this secret.
+        # secret might also contains the key ldap-password if LDAP is enabled.
+        # ldap.bind_password will be ignored and picked from this secret in this case.
+        existingSecret: ""
+        # -- Names of keys in existing secret to use for PostgreSQL credentials
+        secretKeys:
+          adminPasswordKey: ""
+          userPasswordKey: ""
+          replicationPasswordKey: ""
+  primary:
+    persistence:
+      enabled: false
+      # Use an existing Persistent Volume Claim (must be created ahead of time)
+      existingClaim: ""
+      storageClass: ""

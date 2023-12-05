@@ -1,8 +1,20 @@
 # gotrue
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.125.1](https://img.shields.io/badge/AppVersion-v2.125.1-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.125.1](https://img.shields.io/badge/AppVersion-v2.125.1-informational?style=flat-square)
 
 A Helm chart for deploying supabase's gotrue on Kubernetes
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| jessebot |  | <https://github.com/jessebot> |
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| oci://registry-1.docker.io/bitnamicharts | postgresql | 13.2.* |
 
 ## Values
 
@@ -67,7 +79,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | gotrue.security.refreshToken.rotationEnabled | bool | `false` |  |
 | gotrue.security.updatePasswordRequireReauth | bool | `false` |  |
 | gotrue.signup.disable | bool | `false` |  |
-| gotrue.siteUrl | string | `""` | siteUrl to use for gotrue, example... "appflow-flutter://" |
+| gotrue.siteUrl | string | `"http://localhost:3000"` | siteUrl to use for gotrue |
 | gotrue.smtp.adminEmail | string | `""` | smtp admin email addresss |
 | gotrue.smtp.host | string | `""` | smtp hostname |
 | gotrue.smtp.maxFrequency | string | `"5s"` | smtp max frequency |
@@ -93,6 +105,13 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| postgresql.enabled | bool | `false` |  |
+| postgresql.global.postgresql.auth | object | `{"database":"gotrue","existingSecret":"","password":"changeme","postgresPassword":"changeme","secretKeys":{"adminPasswordKey":"","replicationPasswordKey":"","userPasswordKey":""},"username":"gotrue"}` | global.postgresql.auth overrides postgresql.auth |
+| postgresql.global.postgresql.auth.existingSecret | string | `""` | Name of existing secret to use for PostgreSQL credentials. auth.postgresPassword, auth.password, and auth.replicationPassword will be ignored and picked up from this secret. secret might also contains the key ldap-password if LDAP is enabled. ldap.bind_password will be ignored and picked from this secret in this case. |
+| postgresql.global.postgresql.auth.secretKeys | object | `{"adminPasswordKey":"","replicationPasswordKey":"","userPasswordKey":""}` | Names of keys in existing secret to use for PostgreSQL credentials |
+| postgresql.primary.persistence.enabled | bool | `false` |  |
+| postgresql.primary.persistence.existingClaim | string | `""` |  |
+| postgresql.primary.persistence.storageClass | string | `""` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
