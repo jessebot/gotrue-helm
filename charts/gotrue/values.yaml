@@ -1,3 +1,4 @@
+---
 # Default values for gotrue.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
@@ -184,7 +185,7 @@ gotrue:
       name: "auth0"
       signingCert: ""
       signingKey: ""
-  
+
 # -- service for gotrue
 service:
   type: ClusterIP
