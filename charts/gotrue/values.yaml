@@ -25,41 +25,129 @@ gotrue:
   # -- set the admin password for gotrue - ignored if gotrue.existingSecret is not empty
   adminPassword: ""
   # -- gotrue api external URL
-  externalUrl: ""
-  # -- set the JWT secret for gotrue
-  jwtSecret: ""
-  # -- uri allow list
-  uriAllowList: "*"
+  externalUrl: "http://localhost:9999"
+  # -- api host
+  apiHost: "localhost"
   # -- port to use for gotrue
   port: "9999"
+
+  jwt:
+    # -- set the JWT secret for gotrue
+    secret: "change this! very important!"
+    # -- expiration of jwt token
+    exp: "3600"
+    # -- authentication check
+    aud: "authenticated"
+    # -- default group name
+    defaultGroupName: "authenticated"
+    # -- roles to use for admin
+    adminRoles: "supabase_admin,service_role"
+
+  logLevel: debug
+
+  # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L207
+  security:
+    refreshToken:
+      rotationEnabled: false
+      reuseInterval: "0"
+    updatePasswordRequireReauth: false
+
+    # captcha
+    captcha:
+      enabled: false
+      provider: "hcaptcha"
+      secret: "0x0000000000000000000000000000000000000000"
+      timeout: "10s"
+      sessionKey: ""
+
+  operatorToken: "unused-operator-token"
+
+  # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L213C1-L213C1
+  rateLimit:
+    header: "X-Forwarded-For"
+    emailSent: "100"
+
+  # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L216
+  webhook:
+    url: "http://register-lambda:3000/"
+    secret: "test_secret"
+    retries: "5"
+    timeoutSec: "3"
+    events: "validate,signup,login"
+
+  # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L223
+  cookie:
+    key: "sb"
+    domain: "locahost"
+    maxVerifiedFactors: "10"
+
+  # -- uri allow list e.g. ["http://localhost:3000"]
+  uriAllowList: "*"
+
   database:
     # -- which database backend to use for gotrue
     driver: postgres
     # -- database connection url, example: postgres://supabase_auth_admin:root@postgres:5432/postgres
     connectionUrl: ""
+    # -- database namespace?
+    namespace: "auth"
 
   smtp:
+    # -- smtp hostname
     host: ""
+    # -- smtp port
     port: ""
+    # -- smtp user
     user: ""
+    # -- smtp password
     password: ""
+    # -- name of user to send from
+    senderName: ""
+    # -- smtp admin email addresss
     adminEmail: ""
-    adminPassword: ""
-    maxFrequency: "1ns"
+    # -- smtp max frequency
+    maxFrequency: "5s"
 
   mailer:
+    # -- auto confirm accounts
     autoConfirm: false
-    urlPaths:
-      confirmation: "/gotrue/verify"
-      invite: "/gotrue/verify"
-      recovery: "/gotrue/verify"
-      emailChange: "/gotrue/verify"
 
-  metrics:
-    enabled: true
-    exporter: prometheus
+    secureEmailChangeEnabled: true
+
+    # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L29
+    urlPaths:
+      confirmation: "/verify"
+      invite: "/verify"
+      recovery: "/verify"
+      emailChange: "/verify"
+
+    # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L33
+    subjects:
+      confirmation: "Confirm your Email"
+      recovery: "Reset Your Password"
+      magicLink: "Your Magic Link"
+      emailChange: "Confirm Email Change"
+      invite: "You have been invited"
+
+  signup:
+    disable: false
 
   external:
+    # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L50
+    email:
+      enabled: true
+
+    # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L51
+    phone:
+      enabled: true
+
+    # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L52C1-L52C1
+    ios:
+      bundleID: "com.supabase.gotrue"
+
+    # -- PKCE Config https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L171
+    flowStateExpiryDuration: "300s"
+
     google:
       # -- enable google as your external auth provider
       enabled: false
