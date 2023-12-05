@@ -56,7 +56,7 @@ spec:
           {{- end }}
           envFrom:
             - secretRef:
-                name: {{- include "gotrue.secret" . }}
+                name: {{ include "gotrue.secret" . }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
