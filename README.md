@@ -1,6 +1,6 @@
 # Helm chart to deploy gotrue
 
-This helm chart does not fully setup a database for you. To do that, you'll need to run:
+This helm chart does not fully setup a database for you, yet. To do that, you'll need to run:
 
 ```sql
 CREATE USER supabase_admin LOGIN CREATEROLE CREATEDB REPLICATION BYPASSRLS;
