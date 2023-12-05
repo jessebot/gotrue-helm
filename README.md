@@ -9,7 +9,13 @@ Checkout the [`values.yaml`](./gotrue/values.yaml) and accompanying [`README`](.
 helm repo add gotrue https://jessebot.github.io/gotrue-helm
 
 # install the helm chart
-helm install gotrue gotrue/gotrue
+helm install gotrue gotrue/gotrue \
+ --set gotrue.smtp.adminEmail="test@myemailhost.com" \
+ --set gotrue.smtp.host="myemailhost.com" \
+ --set gotrue.smtp.password="mytestpassword" \
+ --set gotrue.smtp.port="587" \
+ --set gotrue.smtp.senderName="friend" \
+ --set gotrue.smtp.user="myemailuser"
 ```
 
 ## Status

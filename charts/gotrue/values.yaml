@@ -34,7 +34,7 @@ gotrue:
 
   jwt:
     # -- set the JWT secret for gotrue
-    secret: "change this! very important!"
+    secret: ""
     # -- expiration of jwt token
     exp: "3600"
     # -- authentication check
@@ -89,15 +89,15 @@ gotrue:
     # -- which database backend to use for gotrue
     driver: postgres
     # -- database connection url
-    connectionUrl: "postgres://postgres@postgresql.svc:5432/gotrue"
-    # -- database namespace?
+    connectionUrl: "postgres://supabase_auth_admin:root@postgresql.gotrue.svc.cluster.local:5432/gotrue"
+    # -- database namespace - sets the schema name
     namespace: "auth"
 
   smtp:
     # -- smtp hostname
     host: ""
     # -- smtp port
-    port: ""
+    port: "587"
     # -- smtp user
     user: ""
     # -- smtp password
@@ -270,13 +270,12 @@ tolerations: []
 
 affinity: {}
 
-
 ##
 ## PostgreSQL chart configuration
 ## for more options see https://github.com/bitnami/charts/tree/main/bitnami/postgresql
 ##
 postgresql:
-  enabled: true
+  enabled: false
   fullnameOverride: postgresql
   global:
     postgresql:
@@ -297,6 +296,8 @@ postgresql:
           userPasswordKey: ""
           replicationPasswordKey: ""
   primary:
+    # initdb:
+    #   scriptsSecret: gotrue-db-init-secret
     persistence:
       enabled: false
       # Use an existing Persistent Volume Claim (must be created ahead of time)
