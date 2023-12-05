@@ -25,7 +25,6 @@ helm install gotrue gotrue/gotrue \
  --set gotrue.smtp.adminEmail="test@myemailhost.com" \
  --set gotrue.smtp.host="myemailhost.com" \
  --set gotrue.smtp.password="mytestpassword" \
- --set gotrue.smtp.port="587" \
  --set gotrue.smtp.senderName="friend" \
  --set gotrue.smtp.user="myemailuser"
 ```
