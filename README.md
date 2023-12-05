@@ -1,5 +1,7 @@
 # Helm chart to deploy gotrue
 
+An unofficial helm chart for deploying [supabase/gotrue](https://github.com/supabase/gotrue) on Kubernetes.
+
 This helm chart does not fully setup a database for you, yet. To do that, you'll need to run:
 
 ```sql
