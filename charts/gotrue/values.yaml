@@ -1,0 +1,182 @@
+# Default values for gotrue.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  # -- image repo for the gotrue image
+  repository: supabase/gotrue
+  # -- image pullPolicy, set to Always if using latest tag
+  pullPolicy: IfNotPresent
+  # -- Overrides the image tag whose default is the chart appVersion.
+  # ref: https://hub.docker.com/r/supabase/gotrue/tags
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+gotrue:
+  # -- siteUrl to use for gotrue, example... "appflow-flutter://"
+  siteUrl: ""
+  # -- use an existing secret for gotrue env vars
+  existingSecret: ""
+  # -- set the admin password for gotrue - ignored if gotrue.existingSecret is not empty
+  adminPassword: ""
+  # -- gotrue api external URL
+  externalUrl: ""
+  # -- set the JWT secret for gotrue
+  jwtSecret: ""
+  # -- uri allow list
+  uriAllowList: "*"
+  # -- port to use for gotrue
+  port: "9999"
+  database:
+    # -- which database backend to use for gotrue
+    driver: postgres
+    # -- database connection url, example: postgres://supabase_auth_admin:root@postgres:5432/postgres
+    connectionUrl: ""
+
+  smtp:
+    host: ""
+    port: ""
+    user: ""
+    password: ""
+    adminEmail: ""
+    adminPassword: ""
+    maxFrequency: "1ns"
+
+  mailer:
+    autoConfirm: false
+    urlPaths:
+      confirmation: "/gotrue/verify"
+      invite: "/gotrue/verify"
+      recovery: "/gotrue/verify"
+      emailChange: "/gotrue/verify"
+
+  metrics:
+    enabled: true
+    exporter: prometheus
+
+  external:
+    google:
+      # -- enable google as your external auth provider
+      enabled: false
+      # -- client id
+      clientID: ""
+      # -- client secret
+      secret: ""
+      # -- redirect URI
+      redirectUri: ""
+    github:
+      # -- enable github as your external auth provider
+      enabled: false
+      # -- client id
+      clientID: ""
+      # -- client secret
+      secret: ""
+      # -- redirect URI
+      redirectUri: ""
+    discord:
+      # -- enable discord as your external auth provider
+      enabled: false
+      # -- client id
+      clientID: ""
+      # -- client secret
+      secret: ""
+      # -- redirect URI
+      redirectUri: ""
+    saml:
+      # -- enable a saml provider for your external auth provider
+      enabled: false
+      # -- metadata URL for saml
+      metadataUrl: ""
+      apiBase: "http://localhost:9999"
+      name: "auth0"
+      signingCert: ""
+      signingKey: ""
+  
+# -- service for gotrue
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+ingress:
+  # -- enable ingress, access from outside the cluster
+  enabled: false
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# -- Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
