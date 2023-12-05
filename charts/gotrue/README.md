@@ -29,9 +29,9 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | gotrue.adminPassword | string | `""` | set the admin password for gotrue - ignored if gotrue.existingSecret is not empty |
 | gotrue.apiHost | string | `"localhost"` | api host |
 | gotrue.cookie | object | `{"domain":"locahost","key":"sb","maxVerifiedFactors":"10"}` | https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L223 |
-| gotrue.database.connectionUrl | string | `""` | database connection url, example: postgres://supabase_auth_admin:root@postgres:5432/postgres |
+| gotrue.database.connectionUrl | string | `"postgres://supabase_auth_admin:root@postgresql.gotrue.svc.cluster.local:5432/gotrue"` | database connection url |
 | gotrue.database.driver | string | `"postgres"` | which database backend to use for gotrue |
-| gotrue.database.namespace | string | `"auth"` | database namespace? |
+| gotrue.database.namespace | string | `"auth"` | database namespace - sets the schema name |
 | gotrue.existingSecret | string | `""` | use an existing secret for gotrue env vars |
 | gotrue.external.discord.clientID | string | `""` | client id |
 | gotrue.external.discord.enabled | bool | `false` | enable discord as your external auth provider |
@@ -60,7 +60,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | gotrue.jwt.aud | string | `"authenticated"` | authentication check |
 | gotrue.jwt.defaultGroupName | string | `"authenticated"` | default group name |
 | gotrue.jwt.exp | string | `"3600"` | expiration of jwt token |
-| gotrue.jwt.secret | string | `"change this! very important!"` | set the JWT secret for gotrue |
+| gotrue.jwt.secret | string | `""` | set the JWT secret for gotrue |
 | gotrue.logLevel | string | `"debug"` |  |
 | gotrue.mailer.autoConfirm | bool | `false` | auto confirm accounts |
 | gotrue.mailer.secureEmailChangeEnabled | bool | `true` |  |
@@ -84,7 +84,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | gotrue.smtp.host | string | `""` | smtp hostname |
 | gotrue.smtp.maxFrequency | string | `"5s"` | smtp max frequency |
 | gotrue.smtp.password | string | `""` | smtp password |
-| gotrue.smtp.port | string | `""` | smtp port |
+| gotrue.smtp.port | string | `"587"` | smtp port |
 | gotrue.smtp.senderName | string | `""` | name of user to send from |
 | gotrue.smtp.user | string | `""` | smtp user |
 | gotrue.uriAllowList | string | `"*"` | uri allow list e.g. ["http://localhost:3000"] |
@@ -106,6 +106,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | postgresql.enabled | bool | `false` |  |
+| postgresql.fullnameOverride | string | `"postgresql"` |  |
 | postgresql.global.postgresql.auth | object | `{"database":"gotrue","existingSecret":"","password":"changeme","postgresPassword":"changeme","secretKeys":{"adminPasswordKey":"","replicationPasswordKey":"","userPasswordKey":""},"username":"gotrue"}` | global.postgresql.auth overrides postgresql.auth |
 | postgresql.global.postgresql.auth.existingSecret | string | `""` | Name of existing secret to use for PostgreSQL credentials. auth.postgresPassword, auth.password, and auth.replicationPassword will be ignored and picked up from this secret. secret might also contains the key ldap-password if LDAP is enabled. ldap.bind_password will be ignored and picked from this secret in this case. |
 | postgresql.global.postgresql.auth.secretKeys | object | `{"adminPasswordKey":"","replicationPasswordKey":"","userPasswordKey":""}` | Names of keys in existing secret to use for PostgreSQL credentials |
