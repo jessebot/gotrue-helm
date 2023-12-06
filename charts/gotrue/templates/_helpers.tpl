@@ -72,6 +72,17 @@ Create the name of the gotrue secret to use
 {{- end }}
 {{- end }}
 
+{{/*
+Create the name of the gotrue secret to use
+*/}}
+{{- define "gotrue.externalSecret" -}}
+{{- if .Values.gotrue.external.existingSecret }}
+{{- .Values.gotrue.external.existingSecret }}
+{{- else }}
+{{- print "gotrue-external-auth-secret" }}
+{{- end }}
+{{- end }}
+
 {{/* Create the name of the gotrue database secret to use */}}
 {{- define "gotrue.databaseSecret" -}}
 {{- if .Values.gotrue.database.existingSecret }}
