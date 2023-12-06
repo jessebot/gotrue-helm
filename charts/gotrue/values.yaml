@@ -117,7 +117,7 @@ gotrue:
     database: "gotrue"
     # -- password to connect to database with
     # ignored if databaseUrl or existingSecret are not empty or if sslmode is not empty
-    password: "mysecurepassword"
+    password: ""
     # -- mode for connecting to database with TLS e.g. verify-full
     # ignored if databaseUrl or existingSecret are not empty.
     sslMode: ""

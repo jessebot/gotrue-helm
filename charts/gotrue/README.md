@@ -1,6 +1,6 @@
 # gotrue
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.125.1](https://img.shields.io/badge/AppVersion-v2.125.1-informational?style=flat-square)
+![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.125.1](https://img.shields.io/badge/AppVersion-v2.125.1-informational?style=flat-square)
 
 A Helm chart for deploying supabase's gotrue on Kubernetes
 
@@ -35,7 +35,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | gotrue.database.existingSecret | string | `""` | use an existingSecret for database. must contain keys: DATABASE_URL, GOTRUE_DB_DRIVER, DB_NAMESPACE |
 | gotrue.database.host | string | `"postgresql.gotrue.svc.cluster.local"` | database hostname - ignored if databaseUrl or existingSecret are not empty |
 | gotrue.database.namespace | string | `"auth"` | database namespace - sets the schema name |
-| gotrue.database.password | string | `"mysecurepassword"` | password to connect to database with ignored if databaseUrl or existingSecret are not empty or if sslmode is not empty |
+| gotrue.database.password | string | `""` | password to connect to database with ignored if databaseUrl or existingSecret are not empty or if sslmode is not empty |
 | gotrue.database.port | string | `"5432"` | database port - ignored if databaseUrl or existingSecret are not empty |
 | gotrue.database.sslCert | string | `""` | path to TLS cert for connecting to the database with TLS ignored if databaseUrl or existingSecret are not empty. |
 | gotrue.database.sslKey | string | `""` | path to TLS key for connecting to the database with TLS ignored if databaseUrl or existingSecret are not empty. |
