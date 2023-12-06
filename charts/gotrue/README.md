@@ -30,7 +30,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | gotrue.apiHost | string | `"localhost"` | GOTRUE_API_HOST - api host |
 | gotrue.cookie | object | `{"domain":"locahost","key":"sb","maxVerifiedFactors":"10"}` | https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L223 |
 | gotrue.database.database | string | `"gotrue"` | name of the database on the databsae hostname ignored if databaseUrl or existingSecret are not empty |
-| gotrue.database.databaseUrl | string | `""` | database connection url  e.g. postgres://supabase_auth_admin:root@postgresql.gotrue.svc.cluster.local:5432/gotrue only required if you don't pass in driver, user, host, port, and  password or sslmode/sslcert/sslrootcert/sslkey. |
+| gotrue.database.databaseUrl | string | `""` | database connection url e.g. postgres://supabase_auth_admin:root@postgresql.gotrue.svc.cluster.local:5432/gotrue only required if you don't pass in driver, user, host, port, and password or sslmode/sslcert/sslrootcert/sslkey. |
 | gotrue.database.driver | string | `"postgres"` | which database backend to use for gotrue ignored if databaseUrl or existingSecret are not empty |
 | gotrue.database.existingSecret | string | `""` | use an existingSecret for database. must contain keys: DATABASE_URL, GOTRUE_DB_DRIVER, DB_NAMESPACE |
 | gotrue.database.host | string | `"postgresql.gotrue.svc.cluster.local"` | database hostname - ignored if databaseUrl or existingSecret are not empty |

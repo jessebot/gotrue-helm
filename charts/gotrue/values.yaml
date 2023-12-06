@@ -132,9 +132,9 @@ gotrue:
     sslKey: ""
     # -- database namespace - sets the schema name
     namespace: "auth"
-    # -- database connection url 
+    # -- database connection url
     # e.g. postgres://supabase_auth_admin:root@postgresql.gotrue.svc.cluster.local:5432/gotrue
-    # only required if you don't pass in driver, user, host, port, and 
+    # only required if you don't pass in driver, user, host, port, and
     # password or sslmode/sslcert/sslrootcert/sslkey.
     databaseUrl: ""
 
