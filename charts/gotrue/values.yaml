@@ -344,11 +344,6 @@ tolerations: []
 
 affinity: {}
 
-## Database init job is completely optional
-initJob:
-  enabled: true
-
-
 ## PostgreSQL chart configuration - provided by bitnami
 ## for more options see https://github.com/bitnami/charts/tree/main/bitnami/postgresql
 ##
