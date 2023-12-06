@@ -2,21 +2,9 @@
 
 An unofficial helm chart for deploying [supabase/gotrue](https://github.com/supabase/gotrue) on Kubernetes.
 
-This helm chart does not fully setup a database for you, yet. To do that, you'll need to run:
-
-```sql
-CREATE USER supabase_admin LOGIN CREATEROLE CREATEDB REPLICATION BYPASSRLS;
-CREATE USER supabase_auth_admin NOINHERIT CREATEROLE LOGIN NOREPLICATION PASSWORD 'mysecurepassword';
-CREATE SCHEMA IF NOT EXISTS auth AUTHORIZATION supabase_auth_admin;
-GRANT CREATE ON DATABASE postgres TO supabase_auth_admin;
-ALTER USER supabase_auth_admin SET search_path = 'auth';
-```
-
-ref: https://github.com/supabase/gotrue/blob/master/init_postgres.sh
-
 ## TLDR
 
-Checkout the [`values.yaml`](./gotrue/values.yaml) and accompanying [`README`](./gotrue/README.md) with auto-generated docs for the values you'd like to use.
+Checkout the [`values.yaml`](./charts/gotrue/values.yaml) and accompanying [`README`](./charts/gotrue/README.md) with auto-generated docs for the values you'd like to use.
 
 ```bash
 # add the repo to your helm repos
@@ -30,6 +18,23 @@ helm install gotrue gotrue/gotrue \
  --set gotrue.smtp.senderName="friend" \
  --set gotrue.smtp.user="myemailuser"
 ```
+
+## Database
+
+This helm chart does not fully setup a database for you, yet. To do that, you'll need to run:
+
+```sql
+CREATE USER supabase_admin LOGIN CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+CREATE USER supabase_auth_admin NOINHERIT CREATEROLE LOGIN NOREPLICATION PASSWORD 'mysecurepassword';
+CREATE SCHEMA IF NOT EXISTS auth AUTHORIZATION supabase_auth_admin;
+GRANT CREATE ON DATABASE postgres TO supabase_auth_admin;
+ALTER USER supabase_auth_admin SET search_path = 'auth';
+```
+
+ref: https://github.com/supabase/gotrue/blob/master/init_postgres.sh
+
+Alternatively, you can uncomment the postgres suggested hbaconf and initdb.scripts section of the values.yaml.
+
 
 ## Status
 Under development still, but happy to review pull requests and issues :)
