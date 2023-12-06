@@ -86,7 +86,7 @@ spec:
                   name: {{ include "gotrue.jwtSecret" . }}
                   key: {{ .Values.gotrue.jwt.secretKey }}
             - name: GOTRUE_JWT_EXP
-              value: {{ .Values.gotrue.jwt.exp }}
+              value: {{ .Values.gotrue.jwt.exp | quote }}
             - name: GOTRUE_JWT_AUD
               value: {{ .Values.gotrue.jwt.aud }}
             {{- if and .Values.gotrue.database.sslMode (eq .Values.gotrue.database.driver "postgres") }}
