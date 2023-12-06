@@ -81,9 +81,22 @@ spec:
                 name: {{ include "gotrue.jwtSecret" . }}
             - secretRef:
                 name: {{ include "gotrue.databaseSecret" . }}
-          {{- with .Values.extraEnv }}
+          {{- if or .Values.extraEnv (and .Values.gotrue.database.sslMode (eq .Values.gotrue.database.driver "postgres")) }}
           env:
+            - name: "PGSSLMODE"
+              value: {{ .Values.gotrue.database.sslMode }}
+
+            - name: "PGSSLCERT"
+              value: {{ .Values.gotrue.database.sslCert }}
+
+            - name: "PGSSLKEY"
+              value: {{ .Values.gotrue.database.sslKey }}
+
+            - name: "PGSSLROOTCERT"
+              value: {{ .Values.gotrue.database.sslRootCert }}
+          {{- with .Values.extraEnv }}
             {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- end }}
       {{- with .Values.volumes }}
       volumes:
