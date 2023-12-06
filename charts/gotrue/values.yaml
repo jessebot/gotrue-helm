@@ -19,61 +19,76 @@ nameOverride: ""
 fullnameOverride: ""
 
 gotrue:
-  # -- siteUrl to use for gotrue
+  # -- GOTRUE_SITE_URL - siteUrl to use for gotrue
   siteUrl: "http://localhost:3000"
-  # -- use an existing secret for gotrue env vars
-  existingSecret: ""
-  # -- set the admin password for gotrue - ignored if gotrue.existingSecret is not empty
-  adminPassword: ""
-  # -- gotrue api external URL
-  externalUrl: "http://localhost:9999"
-  # -- api host
+  # -- API_EXTERNAL_URL - gotrue api external URL
+  externalUrl: "http://0.0.0.0:9999"
+  # -- GOTRUE_API_HOST - api host
   apiHost: "localhost"
-  # -- port to use for gotrue
+  # -- PORT - port to use for gotrue
   port: "9999"
 
   jwt:
-    # -- set the JWT secret for gotrue
+    # -- set the JWT secret for gotrue - ignored if gotrue.jwt.existingSecret is not empty
     secret: ""
-    # -- expiration of jwt token
+    # -- expiration of jwt token - ignored if gotrue.jwt.existingSecret is not empty
     exp: "3600"
-    # -- authentication check
+    # -- authentication check - ignored if gotrue.jwt.existingSecret is not empty
     aud: "authenticated"
-    # -- default group name
+    # -- default group name - ignored if gotrue.jwt.existingSecret is not empty
     defaultGroupName: "authenticated"
-    # -- roles to use for admin
+    # -- roles to use for admin - ignored if gotrue.jwt.existingSecret is not empty
     adminRoles: "supabase_admin,service_role"
+    # -- use an existing Kubernetes secret for jwt secret
+    existingSecret: ""
 
+  # -- GOTRUE_LOG_LEVEL - logging verbosity
   logLevel: debug
 
   # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L207
   security:
     refreshToken:
+      # -- GOTRUE_SECURITY_REFRESH_TOKEN_ROTATION_ENABLED
       rotationEnabled: false
+      # -- GOTRUE_SECURITY_REFRESH_TOKEN_REUSE_INTERVAL
       reuseInterval: "0"
+    # -- GOTRUE_SECURITY_UPDATE_PASSWORD_REQUIRE_REAUTHENTICATION
     updatePasswordRequireReauth: false
 
     # captcha
     captcha:
+      # -- GOTRUE_SECURITY_CAPTCHA_ENABLED
       enabled: false
+      # -- GOTRUE_SECURITY_CAPTCHA_PROVIDER
       provider: "hcaptcha"
+      # -- GOTRUE_SECURITY_CAPTCHA_SECRET
       secret: "0x0000000000000000000000000000000000000000"
+      # -- GOTRUE_SECURITY_CAPTCHA_TIMEOUT
       timeout: "10s"
+      # -- GOTRUE_SESSION_KEY
       sessionKey: ""
 
+  # -- GOTRUE_OPERATOR_TOKEN
   operatorToken: "unused-operator-token"
 
   # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L213C1-L213C1
   rateLimit:
+    # -- GOTRUE_RATE_LIMIT_HEADER
     header: "X-Forwarded-For"
+    # -- GOTRUE_RATE_LIMIT_EMAIL_SENT
     emailSent: "100"
 
-  # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L216
+  # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L216
   webhook:
+    # -- GOTRUE_WEBHOOK_URL
     url: "http://register-lambda:3000/"
+    # -- GOTRUE_WEBHOOK_SECRET
     secret: "test_secret"
+    # -- GOTRUE_WEBHOOK_RETRIES
     retries: "5"
+    # -- GOTRUE_WEBHOOK_TIMEOUT_SEC
     timeoutSec: "3"
+    # -- GOTRUE_WEBHOOK_EVENTS
     events: "validate,signup,login"
 
   # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L223
@@ -86,68 +101,119 @@ gotrue:
   uriAllowList: "*"
 
   database:
+    # -- use an existingSecret for database. must contain keys: DATABASE_URL, GOTRUE_DB_DRIVER, DB_NAMESPACE
+    existingSecret: ""
     # -- which database backend to use for gotrue
+    # ignored if databaseUrl or existingSecret are not empty
     driver: postgres
-    # -- database connection url
-    connectionUrl: "postgres://supabase_auth_admin:root@postgresql.gotrue.svc.cluster.local:5432/gotrue"
+    # -- database username - ignored if databaseUrl or existingSecret are not empty
+    user: "supabase_auth_admin"
+    # -- database hostname - ignored if databaseUrl or existingSecret are not empty
+    host: "postgresql.gotrue.svc.cluster.local"
+    # -- database port - ignored if databaseUrl or existingSecret are not empty
+    port: "5432"
+    # -- name of the database on the databsae hostname
+    # ignored if databaseUrl or existingSecret are not empty
+    database: "gotrue"
+    # -- password to connect to database with
+    # ignored if databaseUrl or existingSecret are not empty or if sslmode is not empty
+    password: "mysecurepassword"
+    # -- mode for connecting to database with TLS e.g. verify-full
+    # ignored if databaseUrl or existingSecret are not empty.
+    sslMode: ""
+    # -- path to root TLS cert for connecting to the database with TLS
+    # ignored if databaseUrl or existingSecret are not empty.
+    sslRootCert: ""
+    # -- path to TLS cert for connecting to the database with TLS
+    # ignored if databaseUrl or existingSecret are not empty.
+    sslCert: ""
+    # -- path to TLS key for connecting to the database with TLS
+    # ignored if databaseUrl or existingSecret are not empty.
+    sslKey: ""
     # -- database namespace - sets the schema name
     namespace: "auth"
+    # -- database connection url
+    # e.g. postgres://supabase_auth_admin:root@postgresql.gotrue.svc.cluster.local:5432/gotrue
+    # only required if you don't pass in driver, user, host, port, and
+    # password or sslmode/sslcert/sslrootcert/sslkey.
+    databaseUrl: ""
 
   smtp:
-    # -- smtp hostname
+    # -- smtp hostname - ignored if gotrue.smtp.existingSecret not empty
     host: ""
-    # -- smtp port
+    # -- smtp port - ignored if gotrue.smtp.existingSecret not empty
     port: "587"
-    # -- smtp user
+    # -- smtp user - ignored if gotrue.smtp.existingSecret not empty
     user: ""
-    # -- smtp password
+    # -- smtp password - ignored if gotrue.smtp.existingSecret not empty
     password: ""
-    # -- name of user to send from
+    # -- name of user to send from - ignored if gotrue.smtp.existingSecret not empty
     senderName: ""
-    # -- smtp admin email addresss
+    # -- smtp admin email addresss - ignored if gotrue.smtp.existingSecret not empty
     adminEmail: ""
-    # -- smtp max frequency
+    # -- smtp max frequency - ignored if gotrue.smtp.existingSecret not empty
     maxFrequency: "5s"
+    # -- use an existing kubernetes secret for SMTP credentials
+    existingSecret: ""
 
   mailer:
     # -- auto confirm accounts
     autoConfirm: false
 
+    # -- GOTRUE_MAILER_SECURE_EMAIL_CHANGE_ENABLED value
     secureEmailChangeEnabled: true
 
-    # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L29
+    # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L29
     urlPaths:
+      # -- GOTRUE_MAILER_URLPATHS_CONFIRMATION
       confirmation: "/verify"
+      # -- GOTRUE_MAILER_URLPATHS_INVITE
       invite: "/verify"
+      # -- GOTRUE_MAILER_URLPATHS_RECOVERY
       recovery: "/verify"
+      # -- GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE
       emailChange: "/verify"
 
     # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L33
     subjects:
+      # -- GOTRUE_MAILER_SUBJECTS_CONFIRMATION
       confirmation: "Confirm your Email"
+      # -- GOTRUE_MAILER_SUBJECTS_RECOVERY
       recovery: "Reset Your Password"
+      # -- GOTRUE_MAILER_SUBJECTS_MAGIC_LINK
       magicLink: "Your Magic Link"
+      # -- GOTRUE_MAILER_SUBJECTS_EMAIL_CHANGE
       emailChange: "Confirm Email Change"
+      # -- GOTRUE_MAILER_SUBJECTS_INVITE
       invite: "You have been invited"
 
   signup:
+    # --  disable new user signup - GOTRUE_DISABLE_SIGNUP
     disable: false
 
   external:
     # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L50
     email:
+      # -- enable email auth - GOTRUE_EXTERNAL_EMAIL_ENABLED
       enabled: true
 
     # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L51
     phone:
+      # -- enable phone auth - GOTRUE_EXTERNAL_PHONE_ENABLED
       enabled: true
 
-    # -- https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L52C1-L52C1
+    # https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L52C1-L52C1
     ios:
+      # -- GOTRUE_EXTERNAL_IOS_BUNDLE_ID
       bundleID: "com.supabase.gotrue"
 
     # -- PKCE Config https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L171
     flowStateExpiryDuration: "300s"
+
+    # -- use an existing kubernetes secret for external provider credentials
+    # must contain environment variables that can be exported.
+    # ref: https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env
+    existingSecret: ""
 
     google:
       # -- enable google as your external auth provider
@@ -158,6 +224,7 @@ gotrue:
       secret: ""
       # -- redirect URI
       redirectUri: ""
+
     github:
       # -- enable github as your external auth provider
       enabled: false
@@ -167,6 +234,7 @@ gotrue:
       secret: ""
       # -- redirect URI
       redirectUri: ""
+
     discord:
       # -- enable discord as your external auth provider
       enabled: false
@@ -176,6 +244,7 @@ gotrue:
       secret: ""
       # -- redirect URI
       redirectUri: ""
+
     saml:
       # -- enable a saml provider for your external auth provider
       enabled: false
@@ -186,11 +255,16 @@ gotrue:
       signingCert: ""
       signingKey: ""
 
+
+# -- extra environment variables you'd like to pass to the gotrue pod in the gotrue deployment
+
+extraEnv: []
+
 # -- service for gotrue
 service:
   type: ClusterIP
   port: 80
-  targetPort: 8080
+  targetPort: 9999
 
 serviceAccount:
   # -- Specifies whether a service account should be created
@@ -270,8 +344,7 @@ tolerations: []
 
 affinity: {}
 
-##
-## PostgreSQL chart configuration
+## PostgreSQL chart configuration - provided by bitnami
 ## for more options see https://github.com/bitnami/charts/tree/main/bitnami/postgresql
 ##
 postgresql:
@@ -301,3 +374,21 @@ postgresql:
       # Use an existing Persistent Volume Claim (must be created ahead of time)
       existingClaim: ""
       storageClass: ""
+    # suggested pgba.conf
+    # pgHbaConfiguration: |-
+    #   local all all trust
+    #   host all all 127.0.0.1/32 md5
+    #   host all gotrue 10.0.0.0/8 md5
+    #   host all supabase_auth_admin 10.0.0.0/8 md5
+    # suggested init for postgres
+    # initdb:
+    #   user: postgres
+    #   password: changeme
+    #   scripts:
+    #     # please change the password below to something secure
+    #     setup.sql: |
+    #       CREATE USER supabase_admin LOGIN CREATEROLE CREATEDB REPLICATION BYPASSRLS;
+    #       CREATE USER supabase_auth_admin NOINHERIT CREATEROLE LOGIN NOREPLICATION PASSWORD 'mysecurepassword';
+    #       CREATE SCHEMA IF NOT EXISTS auth AUTHORIZATION supabase_auth_admin;
+    #       GRANT CREATE ON DATABASE postgres TO supabase_auth_admin;
+    #       ALTER USER supabase_auth_admin SET search_path = 'auth';
