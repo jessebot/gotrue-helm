@@ -57,6 +57,18 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ include "gotrue.secret" . }}
+            - secretRef:
+                name: {{ include "gotrue.smtpSecret" . }}
+            - secretRef:
+                name: gotrue-mailer-secret
+            - secretRef:
+                name: {{ include "gotrue.jwtSecret" . }}
+            - secretRef:
+                name: {{ include "gotrue.databaseSecret" . }}
+          {{- with .Values.extraEnv }}
+          env:
+            {{- toYaml .Values.extraEnv | nindent 12 }}
+          {{- end }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

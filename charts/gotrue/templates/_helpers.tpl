@@ -71,3 +71,30 @@ Create the name of the gotrue secret to use
 {{- print "gotrue-secret" }}
 {{- end }}
 {{- end }}
+
+{{/* Create the name of the gotrue database secret to use */}}
+{{- define "gotrue.databaseSecret" -}}
+{{- if .Values.gotrue.database.existingSecret }}
+{{- .Values.gotrue.database.existingSecret }}
+{{- else }}
+{{- print "gotrue-database-secret" }}
+{{- end }}
+{{- end }}
+
+{{/* Create the name of the gotrue jwt secret to use */}}
+{{- define "gotrue.jwtSecret" -}}
+{{- if .Values.gotrue.jwt.existingSecret }}
+{{- .Values.gotrue.jwt.existingSecret }}
+{{- else }}
+{{- print "gotrue-jwt-secret" }}
+{{- end }}
+{{- end }}
+
+{{/* Create the name of the gotrue smtp secret to use */}}
+{{- define "gotrue.smtpSecret" -}}
+{{- if .Values.gotrue.smtp.existingSecret }}
+{{- .Values.gotrue.smtp.existingSecret }}
+{{- else }}
+{{- print "gotrue-smtp-secret" }}
+{{- end }}
+{{- end }}
