@@ -78,11 +78,18 @@ spec:
             - secretRef:
                 name: gotrue-mailer-secret
             - secretRef:
-                name: {{ include "gotrue.jwtSecret" . }}
-            - secretRef:
                 name: {{ include "gotrue.databaseSecret" . }}
-          {{- if or .Values.extraEnv (and .Values.gotrue.database.sslMode (eq .Values.gotrue.database.driver "postgres")) }}
           env:
+            - name: GOTRUE_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "gotrue.jwtSecret" . }}
+                  key: {{ .Values.gotrue.jwt.secretKey }}
+            - name: GOTRUE_JWT_EXP
+              value: {{ .Values.gotrue.jwt.exp }}
+            - name: GOTRUE_JWT_AUD
+              value: {{ .Values.gotrue.jwt.aud }}
+            {{- if and .Values.gotrue.database.sslMode (eq .Values.gotrue.database.driver "postgres") }}
             - name: "PGSSLMODE"
               value: {{ .Values.gotrue.database.sslMode }}
 
@@ -94,9 +101,9 @@ spec:
 
             - name: "PGSSLROOTCERT"
               value: {{ .Values.gotrue.database.sslRootCert }}
+            {{- end }}
           {{- with .Values.extraEnv }}
             {{- toYaml . | nindent 12 }}
-          {{- end }}
           {{- end }}
       {{- with .Values.volumes }}
       volumes:
