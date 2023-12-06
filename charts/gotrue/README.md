@@ -1,6 +1,6 @@
 # gotrue
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.125.1](https://img.shields.io/badge/AppVersion-v2.125.1-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.125.1](https://img.shields.io/badge/AppVersion-v2.125.1-informational?style=flat-square)
 
 A Helm chart for deploying supabase's gotrue on Kubernetes
 
@@ -66,12 +66,11 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | gotrue.external.saml.signingCert | string | `""` |  |
 | gotrue.external.saml.signingKey | string | `""` |  |
 | gotrue.externalUrl | string | `"http://0.0.0.0:9999"` | API_EXTERNAL_URL - gotrue api external URL |
-| gotrue.jwt.adminRoles | string | `"supabase_admin,service_role"` | roles to use for admin - ignored if gotrue.jwt.existingSecret is not empty |
 | gotrue.jwt.aud | string | `"authenticated"` | authentication check - ignored if gotrue.jwt.existingSecret is not empty |
-| gotrue.jwt.defaultGroupName | string | `"authenticated"` | default group name - ignored if gotrue.jwt.existingSecret is not empty |
 | gotrue.jwt.existingSecret | string | `""` | use an existing Kubernetes secret for jwt secret |
 | gotrue.jwt.exp | string | `"3600"` | expiration of jwt token - ignored if gotrue.jwt.existingSecret is not empty |
 | gotrue.jwt.secret | string | `""` | set the JWT secret for gotrue - ignored if gotrue.jwt.existingSecret is not empty |
+| gotrue.jwt.secretKey | string | `"jwtSecret"` | key in existing kubernetes secret for the jwt secret |
 | gotrue.logLevel | string | `"debug"` | GOTRUE_LOG_LEVEL - logging verbosity |
 | gotrue.mailer.autoConfirm | bool | `false` | auto confirm accounts |
 | gotrue.mailer.secureEmailChangeEnabled | bool | `true` | GOTRUE_MAILER_SECURE_EMAIL_CHANGE_ENABLED value |

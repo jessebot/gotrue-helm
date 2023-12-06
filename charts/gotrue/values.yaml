@@ -35,12 +35,10 @@ gotrue:
     exp: "3600"
     # -- authentication check - ignored if gotrue.jwt.existingSecret is not empty
     aud: "authenticated"
-    # -- default group name - ignored if gotrue.jwt.existingSecret is not empty
-    defaultGroupName: "authenticated"
-    # -- roles to use for admin - ignored if gotrue.jwt.existingSecret is not empty
-    adminRoles: "supabase_admin,service_role"
     # -- use an existing Kubernetes secret for jwt secret
     existingSecret: ""
+    # -- key in existing kubernetes secret for the jwt secret
+    secretKey: "jwtSecret"
 
   # -- GOTRUE_LOG_LEVEL - logging verbosity
   logLevel: debug
