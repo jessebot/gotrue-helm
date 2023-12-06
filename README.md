@@ -1,4 +1,5 @@
 # Helm chart to deploy gotrue
+<a href="https://github.com/jessebot/gotrue-helm/releases"><img src="https://img.shields.io/github/v/release/jessebot/gotrue-helm?style=plastic&labelColor=blue&color=036440&logo=GitHub&logoColor=white"></a>
 
 An unofficial helm chart for deploying [supabase/gotrue](https://github.com/supabase/gotrue) on Kubernetes.
 
@@ -19,7 +20,7 @@ helm install gotrue gotrue/gotrue \
  --set gotrue.smtp.user="myemailuser"
 ```
 
-## Database
+## Database Notes
 
 This helm chart does not fully setup a database for you, yet. To do that, you'll need to run:
 
@@ -33,7 +34,8 @@ ALTER USER supabase_auth_admin SET search_path = 'auth';
 
 ref: https://github.com/supabase/gotrue/blob/master/init_postgres.sh
 
-Alternatively, you can uncomment the postgres suggested hbaconf and initdb.scripts section of the values.yaml.
+Alternatively, you can use the built-in Postgresql sub-chart provided by Bitnami, by setting `postgres.enabled` to `true` and then uncommenting the suggested hbaconf and initdb.scripts section of the values.yaml here:
+https://github.com/jessebot/gotrue-helm/blob/64aa159167e4de275f2b3169577ee3303ab62717/charts/gotrue/values.yaml#L377-L394
 
 
 ## Status
