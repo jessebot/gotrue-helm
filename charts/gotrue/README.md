@@ -65,7 +65,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | gotrue.external.saml.name | string | `"auth0"` |  |
 | gotrue.external.saml.signingCert | string | `""` |  |
 | gotrue.external.saml.signingKey | string | `""` |  |
-| gotrue.externalUrl | string | `"http://localhost:9999"` | API_EXTERNAL_URL - gotrue api external URL |
+| gotrue.externalUrl | string | `"http://0.0.0.0:9999"` | API_EXTERNAL_URL - gotrue api external URL |
 | gotrue.jwt.adminRoles | string | `"supabase_admin,service_role"` | roles to use for admin - ignored if gotrue.jwt.existingSecret is not empty |
 | gotrue.jwt.aud | string | `"authenticated"` | authentication check - ignored if gotrue.jwt.existingSecret is not empty |
 | gotrue.jwt.defaultGroupName | string | `"authenticated"` | default group name - ignored if gotrue.jwt.existingSecret is not empty |
@@ -124,6 +124,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| initJob.enabled | bool | `true` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
@@ -140,7 +141,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service | object | `{"port":80,"targetPort":8080,"type":"ClusterIP"}` | service for gotrue |
+| service | object | `{"port":80,"targetPort":9999,"type":"ClusterIP"}` | service for gotrue |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |

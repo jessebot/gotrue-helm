@@ -22,7 +22,7 @@ gotrue:
   # -- GOTRUE_SITE_URL - siteUrl to use for gotrue
   siteUrl: "http://localhost:3000"
   # -- API_EXTERNAL_URL - gotrue api external URL
-  externalUrl: "http://localhost:9999"
+  externalUrl: "http://0.0.0.0:9999"
   # -- GOTRUE_API_HOST - api host
   apiHost: "localhost"
   # -- PORT - port to use for gotrue
@@ -257,13 +257,14 @@ gotrue:
 
 
 # -- extra environment variables you'd like to pass to the gotrue pod in the gotrue deployment
+
 extraEnv: []
 
 # -- service for gotrue
 service:
   type: ClusterIP
   port: 80
-  targetPort: 8080
+  targetPort: 9999
 
 serviceAccount:
   # -- Specifies whether a service account should be created
@@ -342,6 +343,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+## Database init job is completely optional
+initJob:
+  enabled: true
 
 
 ## PostgreSQL chart configuration - provided by bitnami
