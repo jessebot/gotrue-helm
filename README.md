@@ -1,5 +1,5 @@
 # Helm chart to deploy gotrue
-<a href="https://github.com/jessebot/gotrue-helm/releases"><img src="https://img.shields.io/github/v/release/jessebot/gotrue-helm?style=plastic&labelColor=blue&color=036440&logo=GitHub&logoColor=white"></a>
+<a href="https://github.com/small-hack/gotrue-helm/releases"><img src="https://img.shields.io/github/v/release/small-hack/gotrue-helm?style=plastic&labelColor=blue&color=036440&logo=GitHub&logoColor=white"></a>
 
 An unofficial helm chart for deploying [supabase/gotrue](https://github.com/supabase/gotrue) on Kubernetes.
 
@@ -9,7 +9,7 @@ Checkout the [`values.yaml`](./charts/gotrue/values.yaml) and accompanying [`REA
 
 ```bash
 # add the repo to your helm repos
-helm repo add gotrue https://jessebot.github.io/gotrue-helm
+helm repo add gotrue https://small-hack.github.io/gotrue-helm
 
 # install the helm chart
 helm install gotrue gotrue/gotrue \
