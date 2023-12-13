@@ -1,6 +1,6 @@
 # gotrue
 
-![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.125.1](https://img.shields.io/badge/AppVersion-v2.125.1-informational?style=flat-square)
+![Version: 0.5.2](https://img.shields.io/badge/Version-0.5.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.125.1](https://img.shields.io/badge/AppVersion-v2.125.1-informational?style=flat-square)
 
 A Helm chart for deploying supabase's gotrue on Kubernetes
 
@@ -26,7 +26,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | extraEnv | list | `[]` | extra environment variables you'd like to pass to the gotrue pod in the gotrue deployment |
-| fullnameOverride | string | `""` |  |
+| fullnameOverride | string | `""` | overrides the name used for templating resources throughout this chart |
 | gotrue.apiHost | string | `"localhost"` | GOTRUE_API_HOST - api host |
 | gotrue.cookie | object | `{"domain":"locahost","key":"sb","maxVerifiedFactors":"10"}` | https://github.com/supabase/gotrue/blob/425487325b3e1d7be4661e9f292232205a9a3ce0/example.env#L223 |
 | gotrue.database.database | string | `"gotrue"` | name of the database on the databsae hostname ignored if databaseUrl or existingSecret are not empty |
@@ -148,7 +148,7 @@ A Helm chart for deploying supabase's gotrue on Kubernetes
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.successThreshold | int | `1` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
-| replicaCount | int | `1` |  |
+| replicaCount | int | `1` | how many pods to deploy for gotrue |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
 | service | object | `{"port":80,"targetPort":9999,"type":"ClusterIP"}` | service for gotrue |
