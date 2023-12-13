@@ -3,6 +3,24 @@ entries:
   gotrue:
   - apiVersion: v2
     appVersion: v2.125.1
+    created: "2023-12-13T13:14:15.664315399Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.2.*
+    description: A Helm chart for deploying supabase's gotrue on Kubernetes
+    digest: 4da0dd14adba8bd9b903088cac39b7df4dcc8f276f69988b7e2f688169b019aa
+    maintainers:
+    - name: jessebot
+      url: https://github.com/jessebot
+    name: gotrue
+    type: application
+    urls:
+    - https://github.com/small-hack/gotrue-helm/releases/download/gotrue-0.5.2/gotrue-0.5.2.tgz
+    version: 0.5.2
+  - apiVersion: v2
+    appVersion: v2.125.1
     created: "2023-12-12T08:54:06.115406749Z"
     dependencies:
     - condition: postgresql.enabled
@@ -145,4 +163,4 @@ entries:
     urls:
     - https://github.com/jessebot/gotrue-helm/releases/download/gotrue-0.1.1/gotrue-0.1.1.tgz
     version: 0.1.1
-generated: "2023-12-12T08:54:06.115440783Z"
+generated: "2023-12-13T13:14:15.66434239Z"
